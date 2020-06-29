@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Help</title>
+        <link rel="icon" href="/img/weather.png">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header}}
+            <h3>{{helpTitle}}</h3>
+            <p>A simple graph display of local weather related data. Original data is coming from the
+                <a href="https://darksky.net" target="_blank"> Darksky</a> weather data service, and
+                it is being stored into a database. This site retrieves the stored data and display as
+                graph. Please checkout related projects at Github for the
+                <a href="https://github.com/kenny-lau/weather-data" target="_blank">server</a>
+                and <a href="https://github.com/kenny-lau/subscribe_data" target="_blank">client</a>.</p>
+        </div>
+
+        {{>footer}}
+    </body>
+
+</html>

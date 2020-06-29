@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Weather</title>
+        <link rel="icon" href="/img/weather.png">
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+
+    <body>
+        <div class="main-content">
+            {{>header}}
+            <div class="chart-container">
+                <label>Next update: </label>
+                <label id="countdown"></label>
+                <div class="tab">
+                    <button class="tablinks active" onclick="tabAction(event, 'temperature')">Temperature (F)</button>
+                    <button class="tablinks" onclick="tabAction(event, 'humidity')">Humidity (%)</button>
+                    <button class="tablinks" onclick="tabAction(event, 'windspeed')">Wind Speed (MPH)</button>
+                    <button class="tablinks" onclick="tabAction(event, 'uvindex')">UV Index</button>
+
+                    <div id="temperature" class="tabcontent" style="display:block">
+                        <canvas id="live-temp-chart" height="400" width="700"></canvas>
+                        <canvas id="day-temp-chart" height="400" width="700"></canvas>
+                    </div>
+                    <div id="humidity" class="tabcontent">
+                        <canvas id="live-humidity-chart" height="400" width="700"></canvas>
+                        <canvas id="day-humidity-chart" height="400" width="700"></canvas>
+                    </div>
+                    <div id="windspeed" class="tabcontent">
+                        <canvas id="live-windspeed-chart" height="400" width="700"></canvas>
+                        <canvas id="day-windspeed-chart" height="400" width="700"></canvas>
+                    </div>
+                    <div id="uvindex" class="tabcontent">
+                        <canvas id="live-uvindex-chart" height="400" width="700"></canvas>
+                        <canvas id="day-uvindex-chart" height="400" width="700"></canvas>
+                    </div>
+                </div>
+            </div>
+            {{>footer}}
+    </body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="js/chart.js"></script>
+
+</html>
