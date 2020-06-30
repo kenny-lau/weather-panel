@@ -16,17 +16,19 @@ console.log('Connected to MySQL')
 
 // retrieve determined weather data from MySQL
 // it includes time stamp in second since epoch, temperature, humidity, wind speed and UV index
-const getWeatherByTimeRange = ({ start, end = 0 }, callback) => {
-    let sql = `SELECT time, temperature, humidity, windSpeed, uvIndex FROM local_weather WHERE time >= ${start}`
-    if (end > 0) {
-        sql += ` AND time <= ${end}`
-    }
-    pool.query(sql, (err, rows) => {
-        if (err) {
-            return callback(`${err}`)
+const getWeatherByTimeRange = ({ start, end = 0 }) => {
+    return new Promise((resolve, reject) => {
+        let sql = `SELECT time, temperature, humidity, windSpeed, uvIndex FROM local_weather WHERE time >= ${start}`
+        if (end > 0) {
+            sql += ` AND time <= ${end}`
         }
+        pool.query(sql, (err, rows) => {
+            if (err) {
+                reject(`${err}`)
+            }
 
-        callback(undefined, rows)
+            resolve(rows)
+        })
     })
 }
 
