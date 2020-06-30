@@ -78,11 +78,10 @@ app.get('/todaymysql', (req, res) => {
     const now = new Date()
     const start = Math.floor(now.getTime() / 1000) - 87300 // 86400(1 day) + 900(15 min)
 
-    getWeatherByTimeRange({ start }, (error, results) => {
-        if (error) {
-            return console.log(error)
-        }
+    getWeatherByTimeRange({ start }).then((results) => {
         sendDataToChart(res, now, results)
+    }).catch((error) => {
+        res.status(500).send(error)
     })
 })
 
@@ -91,11 +90,10 @@ app.get('/today', (req, res) => {
     const now = new Date()
     const start = Math.floor(now.getTime() / 1000) - 87300 // 86400(1 day) + 900(15 min)
 
-    getWeatherByTimeRange({ start }, (error, results) => {
-        if (error) {
-            return console.log(error)
-        }
+    mongodbGetData({ start }).then((results) => {
         sendDataToChart(res, now, results)
+    }).catch((error) => {
+        res.status(500).send(error)
     })
 })
 
