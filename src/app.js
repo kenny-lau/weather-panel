@@ -74,27 +74,29 @@ const sendDataToChart = (res, time, results) => {
 }
 
 // end point to obtain data for display from MySQL
-app.get('/todaymysql', (req, res) => {
+app.get('/todaymysql', async (req, res) => {
     const now = new Date()
     const start = Math.floor(now.getTime() / 1000) - 87300 // 86400(1 day) + 900(15 min)
 
-    getWeatherByTimeRange({ start }).then((results) => {
+    try {
+        const results = await getWeatherByTimeRange({ start })
         sendDataToChart(res, now, results)
-    }).catch((error) => {
-        res.status(500).send(error)
-    })
+    } catch (e) {
+        res.status(500).send(e)
+    }
 })
 
 // end point to obtain data for display from MongoDB
-app.get('/today', (req, res) => {
+app.get('/today', async (req, res) => {
     const now = new Date()
     const start = Math.floor(now.getTime() / 1000) - 87300 // 86400(1 day) + 900(15 min)
 
-    mongodbGetData({ start }).then((results) => {
+    try {
+        const results = await mongodbGetData({ start })
         sendDataToChart(res, now, results)
-    }).catch((error) => {
+    } catch (e) {
         res.status(500).send(error)
-    })
+    }
 })
 
 // catch all page
