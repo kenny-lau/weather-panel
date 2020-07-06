@@ -43,7 +43,7 @@ const updateChart = ((chart, title, xLabels, dataPoints) => {
 
 // obtain data from the server
 const getData = (() => {
-    fetch('/today').then((response) => {
+    fetch('/todayweather').then((response) => {
         response.json().then((data) => {
             const twoHoursTitle = data.twoHoursDate + ' ' + data.twoHoursLabels[0]
 

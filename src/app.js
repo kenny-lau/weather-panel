@@ -3,6 +3,8 @@ const express = require('express')
 const hbs = require('hbs')
 const { mongodbGetData } = require('./utils/mongo')
 const getWeatherByTimeRange = require('./utils/mysql')
+require('./db/mongoose')
+const Weather = require('./models/weather')
 
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
@@ -13,11 +15,38 @@ const author = process.env.AUTHOR
 const app = express()
 // Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
+app.use(express.json())
+
 
 // set handlebars engine and views location
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
+
+// create weather data record
+app.post('/weather', async (req, res) => {
+    const weather = new Weather(req.body)
+
+    try {
+        await weather.save()
+        res.status(201).send({ weather })
+    } catch (e) {
+        res.status(400).send(e.message)
+    }
+})
+
+// implement mongoose to retrieve data
+app.get('/todayweather', async (req, res) => {
+    const now = new Date()
+    const start = Math.floor(now.getTime() / 1000) - 87300 // 86400(1 day) + 900(15 min)
+
+    try {
+        const results = await Weather.find({ time: { $gte: start } })
+        sendDataToChart(res, now, results)
+    } catch (e) {
+        res.status(500).send(e.message)
+    }
+})
 
 // render weather panel
 app.get('', (req, res) => {
