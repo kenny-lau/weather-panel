@@ -48,6 +48,23 @@ app.get('/todayweather', async (req, res) => {
     }
 })
 
+app.delete('/retain7days', async (req, res) => {
+    const now = new Date()
+    const dateString = now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate()
+    const since = Math.floor(new Date(dateString).getTime() / 1000) - (86400 * 7) // 86400(1 day), 7 days
+
+    try {
+        const weather = await Weather.deleteMany({ time: { $lt: since } })
+        if (!weather.ok) {
+            return res.status(404).send()
+        }
+        const deletedCount = weather.deletedCount
+        res.send({ deletedCount })
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
 // render weather panel
 app.get('', (req, res) => {
     res.render('index', {
