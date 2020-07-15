@@ -110,29 +110,3 @@ router.get('/today', async (req, res) => {
 })
 
 module.exports = router
-
-// render weather panel
-// router.get('', (req, res) => {
-//     res.render('index', {
-//         title: 'Weather Panel',
-//         name: author
-//     })
-// })
-
-// // help page
-// router.get('/help', (req, res) => {
-//     res.render('help', {
-//         helpTitle: 'Project Description',
-//         title: 'Weather Panel',
-//         name: author
-//     })
-// })
-
-// // catch all page
-// router.get('*', (req, res) => {
-//     res.render('404', {
-//         title: '404',
-//         name: author,
-//         errorMessage: 'Page not found.'
-//     })
-// })
